@@ -5,6 +5,9 @@
  * Revision history: 0.1
  */
 
+/*
+ * CIMA, DIREITA, BAIXO, ESQUERDA: 0, 1, 2, 3.
+ */
 #ifndef GENIUS
 #define	GENIUS
 
@@ -15,9 +18,9 @@
 
 // Functions
 void initGenius(struct Genius_t *Genius);
-static void initRandomSequence(struct Genius_t *Genius);
-static void initOscillator(void);
-static void initInterrupts(void);
+void initRandomSequence(struct Genius_t *Genius);
+void initOscillator(void);
+void initInterrupts(void);
 
 // Vars
 struct Genius_t { 

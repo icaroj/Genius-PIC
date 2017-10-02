@@ -12,16 +12,19 @@
 #include "genius.h"
 
 // Func
-void interrupt tc_int(void);
+void interrupt ISR_Handler(void);
 
 // Vars
 struct Genius_t Genius;
-
+unsigned char animacao = 0;
 
 int main(void) {
     
-    
-    initGenius(&Genius);
+    initOscillator();
+    initInterrupts();
+    initTimer0();
+    initExtInt();
+    initGPIO();   
     
     PORTBbits.RB1 = 1;
     PORTBbits.RB2 = 1;
@@ -34,11 +37,35 @@ int main(void) {
 }
 
 
-void interrupt tc_int(void) {
-    if(INTCONbits.T0IF && INTCONbits.T0IE) {
-        INTCONbits.T0IF = 0;
-        TMR0 = TMR0_PER;
-        setOneLed(Genius.sequencia[Genius.passo_atual]);
+void interrupt ISR_Handler(void) {
+    if(INTCONbits.INTE && INTCONbits.INTF) {
+        INTCONbits.INTF = 0;
+        INTCONbits.INTE = 0;
+        initGenius(&Genius);
+    }
+    
+    if(INTCONbits.RBIE && INTCONbits.RBIF) {
+        INTCONbits.RBIF = 0;
+        switch(PORTB & 0xF0) {
+            case 0xE0:
+                setOneLed(3);
+            break;
+            case 0xD0:
+                setOneLed(2);
+            break;
+            case 0xB0:
+                setOneLed(1);
+            break;
+            case 0x70:
+                setOneLed(0);
+            break;
+        }
+    }
+    
+    if(PIR1bits.TMR1IF && PIE1bits.TMR1IE) {
+        PIR1bits.TMR1IF = 0;
+        TMR1 = PER_TMR1;
+//        setOneLed(Genius.sequencia[Genius.passo_atual]);;
         Genius.passo_atual++;
     } 
 }

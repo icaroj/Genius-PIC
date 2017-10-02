@@ -9,10 +9,11 @@
 #define	GENIUS_TIMER
 
 // Defs
-#define TMR0_PER 181    // ~ 2 seg @37kHz
+#define PER_TMR1 63223    // ~ 2 seg @37kHz
 
 // Functions
 void initTimer0(void);
+void initTimer1(void);
 
 // Libs
 #include <xc.h>

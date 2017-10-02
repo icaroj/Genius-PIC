@@ -12,30 +12,27 @@
 
 
 void initGenius(struct Genius_t *Genius) {
-    initOscillator();
-    initInterrupts();
-    initTimer0();
-    initGPIO();
-    initRandomSequence(Genius);    
+    initRandomSequence(Genius); 
+    initTimer1();
     Genius->passo_atual = 0;
 }
 
 
-static void initRandomSequence(struct Genius_t *Genius) {
+void initRandomSequence(struct Genius_t *Genius) {
     unsigned char i;
-        
+    srand(TMR0);
     for(i = 0; i < MAX_SEQ; i++) {
         Genius->sequencia[i] = rand() % QNT_ESTADOS;
     }
 }
 
 
-static void initOscillator(void) { 
+void initOscillator(void) { 
     PCONbits.OSCF = 0; // 37 kHz mode
 }
 
 
-static void initInterrupts(void) {
+void initInterrupts(void) {
     INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;
 }
