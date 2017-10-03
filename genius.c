@@ -14,7 +14,9 @@
 void initGenius(struct Genius_t *Genius) {
     initRandomSequence(Genius); 
     initTimer1();
-    Genius->passo_atual = 0;
+    Genius->level = 2;
+    Genius->passo = 0;
+    Genius->teclado = 0;
 }
 
 

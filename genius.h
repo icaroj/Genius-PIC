@@ -25,7 +25,9 @@ void initInterrupts(void);
 // Vars
 struct Genius_t { 
     unsigned char sequencia[MAX_SEQ];
-    unsigned char passo_atual;
+    unsigned char teclado;
+    unsigned char level;
+    unsigned char passo;
 };
 
 // Libs

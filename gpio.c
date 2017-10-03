@@ -23,10 +23,8 @@ void initGPIO(void) {
     TRISBbits.TRISB6 = 1;
     TRISBbits.TRISB5 = 1;
     TRISBbits.TRISB4 = 1;
-    
     // RB4:RB7 on-change interrupt
-    INTCONbits.RBIF = 0;
-    INTCONbits.RBIE = 1;
+    INTCONbits.RBIE = 0;
 }
 
 
@@ -39,7 +37,7 @@ void initExtInt(void) {
 
 
 
-void setOneLed(char led) { 
+void setLed(char led) { 
     switch(led) { 
         case 0:
             LED_CIMA = 1;
@@ -69,5 +67,27 @@ void setOneLed(char led) {
             LED_BAIXO = 0;
             LED_ESQUERDA = 1;
         break;
+        
+        case TODOS:
+            LED_CIMA = 1;
+            LED_DIREITA = 1;
+            LED_BAIXO = 1;
+            LED_ESQUERDA = 1;
+        break;
+        
+        case NENHUM:
+            LED_CIMA = 0;
+            LED_DIREITA = 0;
+            LED_BAIXO = 0;
+            LED_ESQUERDA = 0;
+        break;
+            
     }
+}
+
+void buttonOnRisingEdge(int *port, unsigned char mask) {
+    unsigned char i;
+    for(i = 0; i < 255; i++); // delay para debouncing...
+    --mask;
+    while(!((*port >> mask) & 0xFE)); // rising edge
 }
