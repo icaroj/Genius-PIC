@@ -16,14 +16,14 @@
 #define LED_ESQUERDA PORTBbits.RB1
 
 #define BOTAO_PORT PORTB
-#define BOTAO_CIMA 7        
-#define BOTAO_DIREITA 6    
-#define BOTAO_BAIXO 5       
-#define BOTAO_ESQUERDA 4   
+#define BOTAO_CIMA 1 << 7       // 1 << PINO     
+#define BOTAO_DIREITA 1 << 6    // 1 << PINO  
+#define BOTAO_BAIXO 1 << 5      // 1 << PINO 
+#define BOTAO_ESQUERDA 1 << 4   // 1 << PINO 
 
 // Defs 
 #define BOTAO_PORT_PTR &BOTAO_PORT
-#define BOTAO_MASK ( 1 << BOTAO_CIMA | 1 << BOTAO_DIREITA | 1 << BOTAO_BAIXO | 1 << BOTAO_ESQUERDA)
+#define BOTAO_MASK ( BOTAO_CIMA | BOTAO_DIREITA | BOTAO_BAIXO | BOTAO_ESQUERDA)
 #define TODOS 0xFF
 #define NENHUM 0xFE
 

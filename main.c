@@ -25,46 +25,46 @@ int main(void) {
     initTimer0();
     initExtInt();
     initGPIO();   
-    
-    PORTBbits.RB1 = 1;
-    PORTBbits.RB2 = 1;
-    
-    PORTAbits.RA0 = 1;
-    PORTAbits.RA1 = 1;
-    
+        
     signed char res = -1;
     while(1){
         
         while(!Genius.teclado);
         
-        switch(BOTAO_PORT & BOTAO_MASK) {
-//            case 0xE0:
-//                buttonOnRisingEdge(BOTAO_PORT_PTR, BOTAO_ESQUERDA);
-//                setLed(3);
-//                res = 3;
-//            break;
-            case 0x00: 
+        switch(~BOTAO_PORT & BOTAO_MASK) {
+            case BOTAO_ESQUERDA:
+                buttonOnRisingEdge(BOTAO_PORT_PTR, BOTAO_ESQUERDA);
+                setLed(3);
+                res = 3;
+            break;
+            case BOTAO_BAIXO: 
                 buttonOnRisingEdge(BOTAO_PORT_PTR, BOTAO_BAIXO);
                 setLed(2);
-//                res = 2;
+                res = 2;
             break;
-//            case 0xB0:
-//                buttonOnRisingEdge(BOTAO_PORT_PTR, BOTAO_DIREITA);
-//                setLed(1);
-//                res = 1;
-//            break;
-//            case 0x70:
-//                buttonOnRisingEdge(BOTAO_PORT_PTR, BOTAO_CIMA);
-//                setLed(0);
-//                res = 0-;
-//            break;
+            case BOTAO_DIREITA:
+                buttonOnRisingEdge(BOTAO_PORT_PTR, BOTAO_DIREITA);
+                setLed(1);
+                res = 1;
+            break;
+            case BOTAO_CIMA:
+                buttonOnRisingEdge(BOTAO_PORT_PTR, BOTAO_CIMA);
+                setLed(0);
+                res = 0;
+            break;
         }
         
         if(res >= 0) {
-            if(res == Genius.sequencia[Genius.passo]) {
+            if(res == Genius.sequencia[Genius.passo]) { // acertou o passo da sequencia
                 Genius.passo++;
+                if(Genius.passo > Genius.level) { // completou a sequencia, inicia novo nivel
+                    Genius.passo = 0;
+                    Genius.teclado = 0;
+                    Genius.level++;                    
+                    T1CONbits.TMR1ON = 1;
+                }
             }
-            else {
+            else { // errou o passo da sequencia
                 setLed(TODOS);
             }
             res = -1;
@@ -79,7 +79,6 @@ int main(void) {
 void interrupt ISR_Handler(void) {
     if(INTCONbits.INTE && INTCONbits.INTF) {
         INTCONbits.INTF = 0;
-        INTCONbits.INTE = 0;
         initGenius(&Genius);
     }
         

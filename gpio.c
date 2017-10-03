@@ -88,6 +88,7 @@ void setLed(char led) {
 void buttonOnRisingEdge(int *port, unsigned char mask) {
     unsigned char i;
     for(i = 0; i < 255; i++); // delay para debouncing...
-    --mask;
-    while(!((*port >> mask) & 0xFE)); // rising edge
+    for(i = 0; i < 8; i++) 
+        if(mask == (1 << i)) break;
+    while(!((*port >> i) & 0x01));
 }

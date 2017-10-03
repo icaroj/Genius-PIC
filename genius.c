@@ -12,9 +12,10 @@
 
 
 void initGenius(struct Genius_t *Genius) {
+    setLed(NENHUM);
     initRandomSequence(Genius); 
     initTimer1();
-    Genius->level = 2;
+    Genius->level = 0;
     Genius->passo = 0;
     Genius->teclado = 0;
 }
