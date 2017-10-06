@@ -4,7 +4,6 @@
  *
  * Created on 1 de Outubro de 2017, 10:37
  */
-#define _XTAL_FREQ 37000
 #include "config.h"
 #include "gpio.h"
 #include "timer.h"
