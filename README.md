@@ -14,6 +14,7 @@ Código em C (Compialdor Microchip XC8) e PCB projetada no Kicad.
 - Bateria 9V
 - Resistores
 - Buzzer
+- LM 7805
 - PIC
 
 # TODO:
